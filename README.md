@@ -1,4 +1,4 @@
-# chai-aur-cohort :- in a six month journey of learnings, grinding and building.
+# chai-aur-cohort :- in a six month journey of learning, grinding and building.
 
 In this repo you will find the daily update of blogs/code files/resources i have produced while learning from GOAT hitesh and piyush sir.
 
