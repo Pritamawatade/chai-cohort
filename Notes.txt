@@ -1,0 +1,47 @@
+arr.reduce() => please checkout this. This is very important when it comes to the machine coding interview.
+
+leanred about .call and .bind() on array
+
+call :- call is used to change the context of the function in the object.
+bind: :- bind is return the function. 
+
+javascript defination
+        javascript has the call stack concept where each picee of code goto the call stack and call stack execute. 
+        call stack exectute everything. Call stack has one feature which is IT IS WAIT FOR NOTHING. javascript engine wait for nothing.
+        it doesn't wait for anything. 
+
+
+        setTimeout is the function of browser.
+
+        micro task queue -> proise
+        task queue -> setTimeout
+
+        event loop 
+        Task queue
+        call stack  
+        micro task queue 
+
+        https://www.jsv9000.app/
+        https://app.eraser.io/workspace/C3QWGDrgG8MbSgAKzmac
+
+
+        // Project of dragable 
+        https://app.eraser.io/workspace/dfnfllJ0jRgl10NvlGcz?origin=share
+
+
+
+
+
+
+Pipeing: 
+    using the sequence of method is called piping 
+wx. "pritam".toUppercase().substr(1,2).indexOf(p)
+
+
+
+Week-7:
+    When we run code the global execution context is created and then loaded into the memory.
+    Hoisting:
+        Hoisting is the process where interpreter appears to intilittize variable declaration to the top.
+        const, let, and var all three variables support Hoisting but we can't access the const and let variable 
+        because of the tempotial dead zone. before the intilittize of the let variable the dead zone exist.     
