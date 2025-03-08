@@ -45,3 +45,8 @@ Week-7:
         Hoisting is the process where interpreter appears to intilittize variable declaration to the top.
         const, let, and var all three variables support Hoisting but we can't access the const and let variable 
         because of the tempotial dead zone. before the intilittize of the let variable the dead zone exist.     
+
+Week-8:
+    app.use() : -it's an middleware
+    cors: - cors origin resource sharing
+    
