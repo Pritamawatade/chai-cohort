@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+
+    #time-display {
+      font-size: 2em;
+      font-weight: bold;
+      color: #4CAF50;
+      margin-bottom: 20px;
+      letter-spacing: 2px;
+    }
+
+    .button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1em;
+      margin: 5px;
+      transition: background-color 0.3s;
+    }
+
+    .button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <h1>Start Tutorial</h1>
+  <div id="time-display">00:00:00.000</div>
+  <button id="start-stop-btn" class="button">Start</button>
+  <button id="reset-btn" class="button" >Reset</button>
+
+  <script src="popup.js"></script>
+</body>
+</html>
