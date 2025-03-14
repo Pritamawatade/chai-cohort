@@ -155,6 +155,45 @@ const login  = async (req,res)=>{
   }
 }
 
+const changePass = async  (req,res) =>{
+  
+  const {email, oldPass, newPass } = req.body;
+
+  if(!email || !oldPass || !newPass){
+    return res.status(400).json({
+      message:"all fields are required"
+    })
+  }
+
+  try {
+    
+    const user = await User.findOne({email});
+
+    if(!user){
+      return res.status(400).json({
+        message:"no user is found"
+      })
+    }
+
+    const isMatch = await bcrypt.compare(oldPass, user.password);
+
+    if(!isMatch){
+      return res.status(400).json({
+        message:"wrong password"
+      })
+    }
+    user.password = newPass;
+    await user.save();
+    return res.status(200).json({
+      success:true,
+      message:"password is changed"
+    })
+  } catch (error) {
+    return res.status(400).json({
+      message:"something went wrong"
+    })
+  }
+}
 
 
-export { registerUser , verify, login};
+export { registerUser , verify, login,changePass};
