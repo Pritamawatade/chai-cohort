@@ -155,4 +155,6 @@ const login  = async (req,res)=>{
   }
 }
 
+
+
 export { registerUser , verify, login};
