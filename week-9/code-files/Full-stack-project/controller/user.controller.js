@@ -15,22 +15,26 @@ const registerUser = async (req, res) => {
   }
 
   try {
-    const existingUser = User.findOne({ email });
+    const existingUser = await User.findOne({ email });
+    console.log(existingUser);
+    
     if (existingUser) {
-      return res.status(200).json({
+      return res.status(400).json({
         message: "User already exists",
       });
     }
-    const user = await User.create({ user });
+    const user = await User.create({ name, email, password });
 
     if (!user) {
-      res.status(500).json({ message: "user not created" });
+      return res.status(500).json({ message: "user not created" });
     }
 
-    const token = crypto.randomBytes(32).toString("hex");
+    const token = await crypto.randomBytes(32).toString("hex");
     user.verificationToken = token;
 
     await user.save();
+    console.log("before transporter");
+    
 
     const transporter = nodemailer.createTransport({
       host: process.env.MAILTRAP_HOST,
@@ -50,10 +54,12 @@ const registerUser = async (req, res) => {
   ${process.env.BASE_URL}/api/v1/users/verify/${token}
   `,
     };
+console.log("after mail options");
 
-    await transporter.sendMail(mailOption);
+await transporter.sendMail(mailOption);
+console.log("after send mail");
 
-    res.status(200).json({
+    return res.status(200).json({
       message:"user registed succefully",
       success: true
     })
@@ -74,7 +80,7 @@ const verify = async (req,res)=>{
     })
   }
 
-  const user = User.findOne({verificationToken:token})
+  const user = await User.findOne({verificationToken:token})
 
   if(!user){
     return res.status(400).json({
@@ -102,7 +108,7 @@ const login  = async (req,res)=>{
   }
 
   try {
-    const user = User.findOne({email});
+    const user = await User.findOne({email});
 
     if(!user){
       return res.status(400).json({
@@ -118,13 +124,13 @@ const login  = async (req,res)=>{
       })
     }
 
-    if(user.isVerified == false){
+    if(user.isVerified !== true){
       return res.status(400).json({
         message:"please verify your email"
       })
     }
-    const token = jwt.sign({id: user._id, email},
-      "shhhh",
+    const token =  jwt.sign({id: user._id, email},
+      process.env.JWT_SECRET,
       {
         expiresIn: '24h'
       }
@@ -155,45 +161,36 @@ const login  = async (req,res)=>{
   }
 }
 
-const changePass = async  (req,res) =>{
-  
-  const {email, oldPass, newPass } = req.body;
-
-  if(!email || !oldPass || !newPass){
-    return res.status(400).json({
-      message:"all fields are required"
-    })
-  }
-
+const getMe = async (req, res)=>{
   try {
     
-    const user = await User.findOne({email});
-
-    if(!user){
-      return res.status(400).json({
-        message:"no user is found"
-      })
-    }
-
-    const isMatch = await bcrypt.compare(oldPass, user.password);
-
-    if(!isMatch){
-      return res.status(400).json({
-        message:"wrong password"
-      })
-    }
-    user.password = newPass;
-    await user.save();
-    return res.status(200).json({
-      success:true,
-      message:"password is changed"
-    })
   } catch (error) {
-    return res.status(400).json({
-      message:"something went wrong"
-    })
+    
   }
 }
 
+const resetPassword = async (req, res) =>{
+  try {
+    
+  } catch (error) {
+    
+  }
+}
 
-export { registerUser , verify, login,changePass};
+const logoutUser = async (req,res)=>{
+  try {
+    
+  } catch (error) {
+    
+  }
+}
+
+const forgotPassword = async (req,res)=>{
+  try {
+    
+  } catch (error) {
+    
+  }
+}
+
+export { registerUser , verify, login,resetPassword, forgotPassword, logoutUser, getMe};
