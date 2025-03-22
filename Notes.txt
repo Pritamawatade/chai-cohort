@@ -30,7 +30,8 @@ javascript defination
 
 
 
-
+sem version : 
+    express : 4.28.4 -> major minor and patch
 
 
 Pipeing: 
@@ -49,4 +50,27 @@ Week-7:
 Week-8:
     app.use() : -it's an middleware
     cors: - cors origin resource sharing
+
+
+week-10: 
+    : Full stack app with SQL database
+    - Create an normal express app.
+    - Go to the NEON DB and get the postgres connection URL
+    - npx prisma init is the commond to intinalise the prisma 
+    - npx prisma migrate dev to sync the changes into the online database.
+    - npx prisma format to format the code. 
+    - use this code to intinalise the prisma client and use the mehtods on hte prisma
     
+    import { PrismaClient } from "@prisma/client";
+    const prisma = new PrismaClient();
+
+    How node executes the code : 
+        All the code that you hve run with node. Node create the function execute and under that function all your code
+        is pasted and execute function is acted like wrapper function.
+
+        -> require function as a parameter takes a id and search the module in his interal datasource.
+        -> exectuteWrapper function accept first parameter as a exports object
+
+    Package-lock:
+        In package lock which module is depending on which module and which version all this info is given in package
+        lock file.
