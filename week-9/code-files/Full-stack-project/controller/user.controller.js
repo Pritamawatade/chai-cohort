@@ -2,8 +2,8 @@ import bcrypt from "bcryptjs";
 import User from "../model/User.model.js";
 import crypto from "crypto";
 import nodemailer from "nodemailer";
-import jwt from "jsonwebtoken"
-import cookieParser from "cookie-parser"
+import jwt from "jsonwebtoken";
+import cookieParser from "cookie-parser";
 const registerUser = async (req, res) => {
   const { name, email, password } = req.body;
 
@@ -17,7 +17,7 @@ const registerUser = async (req, res) => {
   try {
     const existingUser = await User.findOne({ email });
     console.log(existingUser);
-    
+
     if (existingUser) {
       return res.status(400).json({
         message: "User already exists",
@@ -34,7 +34,6 @@ const registerUser = async (req, res) => {
 
     await user.save();
     console.log("before transporter");
-    
 
     const transporter = nodemailer.createTransport({
       host: process.env.MAILTRAP_HOST,
@@ -54,143 +53,166 @@ const registerUser = async (req, res) => {
   ${process.env.BASE_URL}/api/v1/users/verify/${token}
   `,
     };
-console.log("after mail options");
+    console.log("after mail options");
 
-await transporter.sendMail(mailOption);
-console.log("after send mail");
+    await transporter.sendMail(mailOption);
+    console.log("after send mail");
 
     return res.status(200).json({
-      message:"user registed succefully",
-      success: true
-    })
+      message: "user registed succefully",
+      success: true,
+    });
   } catch (error) {
     res.status(500).json({ message: "something went wrong" });
   }
 };
 
-const verify = async (req,res)=>{
-
-  const {token} = req.params
+const verify = async (req, res) => {
+  const { token } = req.params;
 
   console.log(token);
 
-  if(!token){
+  if (!token) {
     return res.status(400).json({
-      message:"invalid token"
-    })
+      message: "invalid token",
+    });
   }
 
-  const user = await User.findOne({verificationToken:token})
+  const user = await User.findOne({ verificationToken: token });
 
-  if(!user){
+  if (!user) {
     return res.status(400).json({
-      message:"invalid token"
-    })
+      message: "invalid token",
+    });
   }
 
   user.isVerified = true;
   user.verificationToken = undefined;
-  
+
   await user.save();
   return res.status(200).json({
-    message:"verify user successfully"
-  })
+    message: "verify user successfully",
+  });
+};
 
-}
+const login = async (req, res) => {
+  const { email, password } = req.body;
 
-const login  = async (req,res)=>{
-  const {email, password} = req.body
-
-  if(!email || !password){
+  if (!email || !password) {
     return res.status(400).json({
-      message:"invalid email or password"
-    })
+      message: "invalid email or password",
+    });
   }
 
   try {
-    const user = await User.findOne({email});
+    const user = await User.findOne({ email });
 
-    if(!user){
+    if (!user) {
       return res.status(400).json({
-        message:"Invalid email or password"
-      })
+        message: "Invalid email or password",
+      });
     }
 
-    const isMatch = await bcrypt.compare(password, user.password)
+    const isMatch = await bcrypt.compare(password, user.password);
 
-    if(!isMatch){
+    if (!isMatch) {
       return res.status(400).json({
-        message:"password not match"
-      })
+        message: "password not match",
+      });
     }
 
-    if(user.isVerified !== true){
+    if (user.isVerified !== true) {
       return res.status(400).json({
-        message:"please verify your email"
-      })
+        message: "please verify your email",
+      });
     }
-    const token =  jwt.sign({id: user._id, email},
-      process.env.JWT_SECRET,
-      {
-        expiresIn: '24h'
-      }
-    )
+    const token = jwt.sign({ id: user._id, email }, process.env.JWT_SECRET, {
+      expiresIn: "24h",
+    });
 
     const cookieOption = {
-        httpOnly: true,
-        secure: true,
-        maxAge: 24*60*60*1000
-    }
-    res.cookie("token", token, cookieOption )
+      httpOnly: true,
+      secure: true,
+      maxAge: 24 * 60 * 60 * 1000,
+    };
+    res.cookie("token", token, cookieOption);
 
-    
     return res.status(200).json({
-      message:"user logged in",
-      user:{
+      message: "user logged in",
+      user: {
         id: user._id,
         name: user.name,
-        role: user.role
+        role: user.role,
       },
       token,
-      success:true
-    })
+      success: true,
+    });
   } catch (error) {
     return res.status(400).json({
-      message:"something went wrong at login"
-    })
+      message: "something went wrong at login",
+    });
   }
-}
+};
 
-const getMe = async (req, res)=>{
+const getMe = async (req, res) => {
   try {
-    
-  } catch (error) {
-    
-  }
-}
+    const data = req.user;
+    console.log("user data from req :  ", data);
 
-const resetPassword = async (req, res) =>{
+    const user = await User.findById(req.user.id).select("-password");
+    console.log("user = ", user);
+
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: "user not found ",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "user fetched",
+      user,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "internal server error",
+    });
+  }
+};
+
+const resetPassword = async (req, res) => {
   try {
-    
-  } catch (error) {
-    
-  }
-}
+  } catch (error) {}
+};
 
-const logoutUser = async (req,res)=>{
+const logoutUser = async (req, res) => {
   try {
-    
+    res.cookie("token", "", {}); // you can send the optional data in braces
+    return res.status(200).json({
+      success: true,
+      message: "logout successfully",
+    });
   } catch (error) {
-    
+    return res.status(500).json({
+      success: false,
+      message: "error at logout",
+    });
   }
-}
+};
 
-const forgotPassword = async (req,res)=>{
+const forgotPassword = async (req, res) => {
   try {
-    
-  } catch (error) {
-    
-  }
-}
+  } catch (error) {}
+};
 
-export { registerUser , verify, login,resetPassword, forgotPassword, logoutUser, getMe};
+export {
+  registerUser,
+  verify,
+  login,
+  resetPassword,
+  forgotPassword,
+  logoutUser,
+  getMe,
+};
