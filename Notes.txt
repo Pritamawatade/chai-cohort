@@ -13,7 +13,7 @@ javascript defination
 
         setTimeout is the function of browser.
 
-        micro task queue -> proise
+        micro task queue -> promise
         task queue -> setTimeout
 
         event loop 
@@ -74,3 +74,13 @@ week-10:
     Package-lock:
         In package lock which module is depending on which module and which version all this info is given in package
         lock file.
+
+tasks :
+    - library management system
+    - parking 
+    - learnyst 
+    - hospital
+    - food del app with real time rider tracking 
+    - e-commerce
+    
+    
