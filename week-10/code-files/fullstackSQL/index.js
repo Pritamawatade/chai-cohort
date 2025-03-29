@@ -13,7 +13,7 @@ app.use(cors({
     origin:process.env.BASE_URL
 }))
 
-app.use("/api/v1/users", userRouter);
+
 
 app.get('/',(req,res)=>{
     res.status(200).json({
@@ -22,8 +22,10 @@ app.get('/',(req,res)=>{
 })
 
 
+app.use("/api/v1/users", userRouter);
 
 app.listen(port, ()=>{
     console.log(`app is running on ${port}`);
     
 })
+

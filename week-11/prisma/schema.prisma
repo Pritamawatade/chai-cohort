@@ -15,15 +15,14 @@ datasource db {
 
 model User {
   id                  String   @id @default(cuid())
-  phone               String
   name                String
   email               String   @unique
+  phone               String   @unique
   password            String
   role                String   @default("user")
-  isVerified          Boolean  @default(false)
   verificationToken   String?
   passwordResetToken  String?
   passwordResetExpiry String?
   createdAt           DateTime @default(now())
-  updatedAt           DateTime @updatedAt
+  updatedAt           DateTime @default(now())
 }
