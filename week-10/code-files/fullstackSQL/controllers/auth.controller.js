@@ -92,32 +92,40 @@ export const verify = async (req, res) => {
   }
 
   try {
-    const user = await prisma.user.findUnique({ verificationToken: token });
+    console.log("verify 1");
+    
+    // Correctly find user by verification token
+    const user = await prisma.user.findFirst({
+        where: { verificationToken: token },
+    });
 
+    // Check if user exists
     if (!user) {
-      return res.status(400).json({
-        message: "token is not valid",
-      });
+        return res.status(400).json({
+            message: "token is not valid",
+        });
     }
+    console.log("verify 2");
 
-    user.isVerified = true;
-    user.verificationToken = undefined;
-
+    // Update user verification status
     await prisma.user.update({
-      where: { id: user.id },
-      data: {
-        isVerified: true,
-        verificationToken: undefined,
-      },
+        where: { id: user.id },
+        data: {
+            isVerified: true,
+            verificationToken: null, // Set to null, not undefined
+        },
     });
+    console.log("verify 3");
 
     return res.status(200).json({
-      message: "User verified successfully",
+        message: "User verified successfully",
     });
-  } catch (error) {
-    return res.status(200).json({
-      message: "User verifying error",
+} catch (error) {
+    console.error("Verification Error:", error);
+    return res.status(500).json({
+        message: "User verifying error",
     });
-  }
+}
+
 };
 

@@ -75,12 +75,20 @@ week-10:
         In package lock which module is depending on which module and which version all this info is given in package
         lock file.
 
-tasks :
-    - library management system
-    - parking 
-    - learnyst 
-    - hospital
-    - food del app with real time rider tracking 
-    - e-commerce
+    tasks :
+        - library management system
+        - parking 
+        - learnyst 
+        - hospital
+        - food del app with real time rider tracking 
+        - e-commerce
+        
+week-11:
+    TO get started with prettier
+        1. Make a .prettierrc file and define your rules in json format.
+        2. And also make the .prettierignore and give name of files and folder in which you don't pretter to interfare
     
-    
+    # .env.local is used when we are providing envirmoment variable from local machine just to sake of running the Project
+
+    megaProject:
+        1. healthcheck route - it is controller to check if the server is up and running
