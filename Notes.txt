@@ -92,3 +92,45 @@ week-11:
 
     megaProject:
         1. healthcheck route - it is controller to check if the server is up and running
+
+
+week-12:
+        Typescript is used to define types.
+        To use TS in the backend first we need to create TS config file. -- tsc --init
+        we can use import syntax from start if we use TS in express.
+        // every variable in .env is string
+        install @types/node it contains the type of all node dependecnyis. 
+        also npm i typescript.
+
+        winston is a logger
+
+
+    Freelancing project:
+         Too many click points.   
+         sliber issue
+         what's that website wants to tell, STORY. user persona story important.
+         you can be creative with wireframe. 
+         left side info and right side why.
+         every section have CTA.
+         No cpoyright issues
+
+
+         Must-Have:
+            - Deployed link (working, public)
+            - GitHub repo link
+            - Good looking UI as per eraser (https://app.eraser.io/workspace/OVKKJzx4PRQBL7rScVg8)
+            - Good code quality (clean, readable, DRY)
+            - Proper file structure (components, assets, styles, etc.)
+            - Meaningful commit messages (atomic, descriptive)
+            - Fully responsive design (mobile, tablet, desktop)
+            - Accessibility considerations (semantic HTML, aria tags)
+            - No usage of proprietary or problematic assets without license
+            - No usage of copyrighted material
+
+            Bonus:
+            - Usage of React.js
+            - Lighthouse performance score above 90
+            - Micro-interactions (tasteful and not overdone)
+            - Deployment CI/CD pipeline (like with Vercel)
+            - Custom 404 page
+            - Easter eggs or thoughtful UX touches
