@@ -1,0 +1,384 @@
+
+first video : 
+        first section: 
+            1. create a account on atlas and create one database also don't forgot to give database access and network access to all.
+            2. create new database and create one collection called user.
+            3. install mongoDB vs code extension
+            4. get the connection string from the atlas
+            5. give that to mongoDb extension
+            6. get the dummy data from the gist.github.com/hiteshchoudhary
+
+        second section:
+            1. Create a authers and books collection inside the agrre database
+            2. get those dummy data and in the vs code extension right click and insertdata and choose inertmany and paste that object
+                inside it.
+            3.now one the all the data is in within the place, now write for writing mongoDB aggration pipelines 
+            4. So in the aggration there are stages in the pipeline. 
+            5. 
+            here you can see in the code that there two objects 
+            first object is first stage and second object is another stage 
+            ```
+                            [
+                                {
+                                    $match: {
+                                    isActive: true
+                                    }
+                                },
+                                {
+                                    $count: 'activeusers'
+                                }
+                            ]
+            ```
+
+
+second video:
+    1. so we have to group the people according to the average age. 
+    2. we can use this code to do that  
+    what's the average age of all users?
+        ```
+                    
+            [
+            {
+                $group: {
+                _id: null,
+                averageAge:{
+                    $avg: "$age"
+                }
+                }
+            }
+            ]
+        ```
+
+        here as you can see the $group operator in the mongoDB grop the data into the single documents. 
+        _id: null // this line get all documents which are null basically all the document and then $avg we 
+            calculate the avaerage of the avg age.
+
+    3. List the top 5 monst common fruits amont the usrs;
+    ```
+        [
+            {
+                $group: {
+                _id: "$favoriteFruit",
+                }
+            }
+        ]
+    ```
+
+    -1 : sort in the descending order
+     1 : sort in acesending order
+
+     # this code snippet will sort the documents and limit the result to only two documents
+
+     ```
+     [
+        {
+            $group: {
+            _id: "$favoriteFruit",
+                count:{
+                $sum: 1
+                }
+            }
+        },
+        {
+        $sort: {
+        count: -1
+        }  
+        },
+        {
+            $limit: 2
+        }
+    ]
+     ```
+
+    4. Without grouping you can't perform operations on the all documents of the collections 
+      give null as _id to group all the documents into the one
+
+      # To find the average age of all users 
+      ```
+      [
+        {
+            $group: {
+            _id: null,
+            averageAge:{
+                $avg: "$age"
+            }
+            }
+        }
+      ]
+```
+
+
+    5. what $group actully is: 
+    
+        The $group stage combines multiple documents with the same field, fields, or expression into a single document according to a group key. The result is one document per unique group key.
+
+        A group key is often a field, or group of fields. The group key can also be the result of an expression. Use the _id field in the $group pipeline stage to set the group key.
+
+        In the $group stage output, the _id field is set to the group key for that document.
+
+        The output documents can also contain additional fields that are set using accumulator expressions.
+
+        Note
+        $group does not order its output documents.
+
+    6.if i provide _id: null then it groups everything as one but if i provide a specific field then it groups them based on the feild.
+
+    # To find the top users based on country with nested objects
+
+    ```
+            [
+                {
+                    $group: {
+                    _id: "$company.location.country",
+                        userCount:{
+                        $sum:1
+                        }
+                    }
+                },
+                {
+                    $sort: {
+                    userCount: -1
+                    }
+                }
+        ]
+
+```
+
+
+4th video:
+    what does unwind do :- the $unwind operator used to work on the array so basically what it is does is 
+    suppse there is 1 user document and inside that we have array of 3 sizes. so unwind will basically it create 3 separate documents for each user
+
+    syntax :
+                    [
+                        {
+                            $unwind: "$tags"
+                        }
+                    ]
+
+    This is an example of finding the average of tags 
+    ```
+
+            [
+        {
+            $unwind: "$tags"
+        },
+        {
+            $group: {
+            _id: "$_id",
+            numberOfTags:{
+                $sum: 1
+            }
+            
+            }
+        },
+        {
+            $group: {
+            _id: null,
+            avgNumberOfTags:{
+                $avg: "$numberOfTags"
+            }
+            }
+        }
+        ]
+
+```
+
+        $addFeilds : adds a another feild to the existing database
+
+        this is the syantax of it,
+
+        [
+            {
+                $addFields: {
+                numberOfTags: {
+                    $size: {$ifNull: ["$tags", []]}
+                     }
+
+                }
+            }
+        ]
+
+        here in the above code snippet we have used the $size operator nd the $ifNull operator the reason to use size is simple it's to 
+        get an size of the array but to reason to use the $ifNull operator is that  we are dwealing with mongoDB here in some
+        cases the array property may not be exist in the document so if the array not found to prevent the abormal behavior we
+        say the use the empty array [] if the array not found.
+
+
+// Video 5:
+    $match :  
+            In MongoDB aggregation pipelines, the $match stage is used to filter documents based on specified conditions. It works similarly to a WHERE clause in SQL. The $match stage allows you to pass only the documents that meet the specified criteria to the next stage in the pipeline.
+
+     3. how many users have 'enim' one of theire tag ? 
+
+    ```
+            [
+        {
+            $match: {
+            tags: "enim"
+            }
+        },
+        {
+            $count: 'enimusers'
+        }
+        ]
+    ```
+
+    Q.what are the names and age of the users who are inactive and have verit as a tag?
+    ``` 
+            [
+        {
+            $match: {
+            isActive: false,
+            tags: "velit"
+            }
+        },
+        {
+            $project: {
+            name: 1, age:1
+            }
+        }
+        ]
+
+    ```
+
+    $project : 
+        In MongoDB aggregation pipelines, the $project stage is used to reshape documents by including, excluding, or transforming fields. It allows you to control which fields are passed to the next stage in the pipeline.
+
+            Include or Exclude Fields:
+                Specify 1 to include a field or 0 to exclude it.
+                By default, _id is included unless explicitly excluded.
+            Create New Fields:
+                You can create new fields by applying transformations or calculations.
+            Rename Fields:
+               You can rename fields by assigning them new names.
+            Transform Data:
+              Use aggregation operators (e.g., $concat, $toUpper, $add) to modify field values.
+
+    Q. how many number users phone number starts with +1 (940)
+
+     ```
+            [
+    {
+        $match:{
+        "company.phone" : /^\+1 \(940\)/
+        }
+    },
+    {
+        $count: "usersWithNumbers"
+    }
+    ]
+     ```
+    Q. who has registed most recently
+
+    ```
+            [
+        {
+            $sort: {
+            registered: -1
+            }
+        },
+        {
+            $limit: 4
+        },
+        {
+            $project: {
+            name: 1,
+            age: 1,
+            registered: 1,
+            
+            }
+        }
+        ]
+
+     ```
+    
+  Q. group the users according to their favourite fruits and get their name and age with push.
+        [
+        {
+            $group: {
+            _id: "$favoriteFruit",
+            users: { $push: "$name"},
+            agedusers: {$push: "$age"}
+            }
+        },
+        
+        ]
+
+    here users adn agedUsers are like new fileds so don't need to wrap them into the quotes but if you are refering The
+    exisitingn property inside the documnets you have to wrap them into the "" quotes. 
+    here we are creaticreating new array above users and agedusers and with $push we are inserting the name and age inside it.
+
+ Q. How many users have ad as their tag in at second positions
+
+        [
+        {
+            $match: {
+            "tags.1": "ad",
+            },
+        },
+        {
+            $count: "UsersadTag",
+        },
+        ]
+
+    # We can access the array values with . operator here first value is 0 and so on and so far.
+
+    This is how you can use the $all operator
+ Q. List of all users who have enim and id in ther tags
+
+    [
+    {
+        $match: {
+        tags:{
+            $all: ["enim", "id"]
+        }
+        }
+    }
+    ]
+
+
+ Q.List of all companies located in the USA with corresponding user count
+
+answer: [
+  {
+    $match: {
+      "company.location.country": "USA"
+    }
+  },
+  {
+    $group:{
+      _id: "$company.title",
+      userCount:{
+        $sum: 1
+      }
+    }
+  }
+]
+
+
+This is the code o mongoDb aggreatin pipeline for $lookup and getting the value from two collection as one just like foreign key in mysql
+[
+  {
+    $lookup: {
+      from: "authers",
+      localField: "author_id",
+      foreignField: "_id",
+      as: "auther_details"
+    }
+  },
+  {
+    $addFields: {
+      auhter_details: {
+ //       $first: "$auther_details"
+        $arrayElemAt:["$auther_details", 0]
+      }
+    }
+  }
+]
+
+
+**You can use $first for getting the first element from the array 
+** You can also use $arrayElemAt and provide 2 paramatter in the array  like which array you want to lookup and which index you want to pic up.
+
+

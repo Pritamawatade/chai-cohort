@@ -134,3 +134,55 @@ week-12:
             - Deployment CI/CD pipeline (like with Vercel)
             - Custom 404 page
             - Easter eggs or thoughtful UX touches
+
+Week-13:
+    1.Why className and not class:
+        -No matter what you give at the end class is also converted into the className behind the scene so react directly 
+        uses className.
+    2. "*" in CORS origin don't work when the frontend is sharing creaditatils or sending cookies.
+    
+
+week-14:
+Started leetlab
+
+docker run postgres:
+    docker run --name my-postgres -e POSTGRES_USER=myuser -e POSTGRES_PASSWORD=mypassword -p 5432:5432 -d postgres
+
+Prisma command:
+
+    npm i prisma/client
+    npx prisma init
+    npx prisma generate
+    npx prisma migrate
+    npx prisma db push
+
+ - You can use the res.cookie to send the cookie.
+
+ Problem model:
+  model Problem {
+   id String @id @default(uuid())
+   title String
+   description String
+   difficulty Difficulty
+   tags String[] // ["tag1", "tag2", "tag3"]
+   userId String
+   examples  Json
+   constraints String
+   hints String?
+   editorial String?
+
+   testcases  Json // 
+   codeSnippets Json
+   referenceSolutions Json
+
+   createdAt DateTime @default(now())
+   updatedAt DateTime @updatedAt
+
+  //  Relationship
+  user  User    @relation(fields: [userId], references: [id] , onDelete: Cascade)
+}
+
+
+
+week-15:
+    

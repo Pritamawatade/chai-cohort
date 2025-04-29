@@ -1,0 +1,50 @@
+
+Quetions with answers: 
+
+        1. List of all unique eye colors in the collection ?
+        2. what is the avearage number of tags per user ?
+        3. how many users have 'enim' one of theire classes ? 
+        4. find the top users based on country with nested objects?
+        5.  To find the average age of all users ?
+        6. List the top 5 monst common fruits amont the usrs ?
+        7 what's the average age of all users?
+        8. what are the names and age of the users who are inactive and have verit as a tag?
+        9. how many number users phone number starts with +1 (940)
+        10. who has registed most recently 
+        11. group the users according to their favourite fruits and get their name and age with push.
+        12. List of all companies located in the USA with corresponding user count
+        13.  List of all users who have enim and id in ther tags
+        14.  How many users have ad as their tag in at second positions
+
+        
+        
+Questions as assignments:
+            1. Which company has the highest number of active users?
+        (Use $match on isActive: true, group by company.title, count users, sort descending, limit 1)
+
+        🔹 2. Find all users whose names start and end with a vowel.
+        (Use $match with a regex: /^[aeiouAEIOU].*[aeiouAEIOU]$/ on the name field)
+
+        🔹 3. Count users whose registered date is in the last 30 days.
+        (Convert current date in JS or MongoDB’s $dateSubtract, use $match with $gte on registered)
+
+        🔹 4. Find the average age of users grouped by their eye color.
+        (Group by eyeColor, use $avg on age)
+
+        🔹 5. List users who have more than 3 tags assigned to them.
+        (Use $addFields + $size to calculate tags.length, then $match with $gt: 3)
+
+        🔹 6. Get a list of inactive users whose favorite fruit is either banana or strawberry.
+        (Match on isActive: false and favoriteFruit: { $in: ["banana", "strawberry"] })
+
+        🔹 7. Find the total number of unique tags used by all users.
+        (Use $unwind, then group by tag name, then count the number of unique tag groups)
+
+        🔹 8. List the names and phones of users whose company phone number ends with “00”.
+        (Use regex on company.phone: /00$/)
+
+        🔹 9. Find users who have both enim and id tags and are above 30 years old.
+        (Match on tags: { $all: ["enim", "id"] } and age: { $gt: 30 })
+
+        🔹 10. Which eye color is most common among users with less than 2 tags?
+        (Add field with tag count, filter with $lt: 2, group by eyeColor, count, sort)
