@@ -1,0 +1,28 @@
+In this week we continued with our leetlab project, 
+
+Moved with creating frontend of out leetlab project:
+
+we learned about following concepts:
+
+1. React
+2. Zustand
+3. React Hook Form
+4. Zod
+5. Axios
+
+
+REACT:
+    React is a popular JavaScript library for building user interfaces, particularly single-page applications where data changes over time. It allows developers to create large web applications that can update and render efficiently in response to data changes. React focuses on the "View" in the MVC (Model-View-Controller) pattern, and it uses a declarative approach to define UI components.
+
+ZUSTAND:
+    Zustand is a small, fast, and scalable state management library for React applications. It provides an easy way to manage global state with a minimal API, without the boilerplate often associated with larger state management solutions. Zustand is known for its simplicity, allowing for straightforward state updates and retrievals.
+
+REACT HOOK FORM:
+    React Hook Form is a library that simplifies form handling in React applications. It provides hooks to manage form state, validation, and submission. It is lightweight and focuses on performance, reducing the number of re-renders by using uncontrolled components and utilizing a ref-based approach.
+
+ZOD:
+    Zod is a TypeScript-first schema declaration and validation library. It allows developers to define the shape of data and validate it at runtime, ensuring that data conforms to specified types and structures. Zod integrates well with TypeScript, providing type inference and ensuring type safety across applications.
+
+AXIOS:
+    Axios is a promise-based HTTP client for the browser and Node.js. It is used to make HTTP requests to fetch or save data, allowing for easy integration with RESTful services. Axios provides a simple API for making asynchronous requests and supports features such as interceptors, request cancellation, and automatic JSON data transformation.
+

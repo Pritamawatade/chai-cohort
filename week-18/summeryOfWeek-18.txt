@@ -1,0 +1,45 @@
+In this week we actully started wth learning react in depth, 
+
+Made an custom react:
+
+we learned about following concepts:
+
+1. React
+2. React-dom
+3. prettier
+4. esLint
+5. babel
+
+
+REACT:
+    React is a popular JavaScript library for building user interfaces, particularly single-page applications where data changes over time. It allows developers to create large web applications that can update and render efficiently in response to data changes. React focuses on the "View" in the MVC (Model-View-Controller) pattern, and it uses a declarative approach to define UI components.
+
+React-DOM:
+    ReactDOM is a package that provides DOM-specific methods that enable React to interact with the DOM. It's responsible for rendering React components to the DOM. ReactDOM ensures that updates to the component state are efficiently reflected in the DOM, enabling smooth and performant user interfaces.
+
+PRETTIER:
+    Prettier is an opinionated code formatter that enforces a consistent style across your codebase. It supports many languages, integrates with most editors, and can be customized with configuration files. Prettier automatically formats your code according to a set of rules, reducing the need for manual styling decisions and code reviews focused on style issues. Its main goal is to provide a uniform appearance to your code, making it easier to read and maintain. By using Prettier, teams can focus more on code functionality rather than stylistic disagreements.
+ESLINT:
+    ESLint is a static code analysis tool used to identify and report on patterns in JavaScript code that are in violation of a set of predefined rules. ESLint allows developers to extend the ruleset with plugins and customize the rules to fit their needs. ESLint is essential for code quality and maintenance, as it helps developers detect potential issues before they cause problems.
+
+    Example:
+    //Bad code
+    if (someCondition) {
+      doSomething();
+    }
+    //Good code
+    if (someCondition) {
+      doSomething();
+    } else {
+      //Do something else
+    }
+
+BABEL:
+    Babel is a JavaScript compiler and transpiler for converting modern JavaScript code into code that can be executed by older browsers. Babel can be used to convert the syntax of modern JavaScript into syntax supported by older browsers and Node.js versions. Babel is essential for code compatibility and forward-compatibility, as it allows developers to write code that is compatible with a wide range of browsers and Node.js versions.
+
+    Example:
+    //Modern code
+    const myString = `Hello World`;
+    //Old browser compatible code
+    var myString = "Hello World";
+

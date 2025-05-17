@@ -1,0 +1,6 @@
+In this week we continued with our leetlab project, 
+
+we learned about upsert method in prisma:
+
+    The upsert method is used to create or update a single record in the database. This method uses the ON CONFLICT clause in Postgres to either create a new record or update an existing one. The upsert method takes an object with the column names and values as the first argument, and an object with the update columns and values as the second argument. If the record already exists, the update values will be used to update the existing record. If the record does not exist, a new record will be created with the given values.
+
