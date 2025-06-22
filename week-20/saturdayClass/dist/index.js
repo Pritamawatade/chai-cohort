@@ -20,12 +20,29 @@ const socket_io_1 = require("socket.io");
 const app = (0, express_1.default)();
 const httpServer = http_1.default.createServer(app);
 const io = new socket_io_1.Server(httpServer);
+const state = new Array(100).fill(false);
 io.on('connection', (socket) => {
     console.log('a user connected', socket.id);
+    setInterval(() => {
+        socket.emit("hi..");
+        socket.emit("as long as i am alive");
+        socket.emit("There are infinite possibilites");
+    }, 2000);
+    socket.on('message', (message) => {
+        console.log(message);
+        io.emit('message', message);
+    });
+    socket.on('checkbox', (data) => {
+        state[data.index] = data.checked;
+        io.emit('checkbox', data);
+    });
 });
 const redis = new ioredis_1.default();
 const PORT = process.env.PORT || 3000;
 app.use(express_1.default.static("./public"));
+app.get('/state', (req, res) => {
+    res.json(state);
+});
 app.use(function (req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         const key = 'rate-limit';

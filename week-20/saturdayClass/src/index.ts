@@ -7,8 +7,25 @@ const app = express();
 const httpServer = http.createServer(app);
 const io = new Server(httpServer);
 
+const state = new Array(100).fill(false);
+
 io.on('connection', (socket)=>{
   console.log('a user connected', socket.id);
+  setInterval(()=>{
+    socket.emit("hi..")
+    socket.emit("as long as i am alive")
+    socket.emit("There are infinite possibilites")
+  },2000)
+  
+  socket.on('message', (message) => {
+    console.log(message);
+    io.emit('message', message);
+  });
+
+  socket.on('checkbox', (data) => {
+    state[data.index] = data.checked
+    io.emit('checkbox', data);
+  })
 })
 
 const redis = new Redis();
@@ -17,6 +34,9 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.static("./public"));
 
+app.get('/state', (req, res) => {
+  res.json(state)
+})
 app.use(async function(req,res,next){
   const key = 'rate-limit';
   
