@@ -4,7 +4,7 @@ interface User{
     email: string
 }
 
-function add1(x: number, y:number){
+function add1(x: number, y:number): number{
     return x+y
 }
 
